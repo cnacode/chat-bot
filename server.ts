@@ -12,12 +12,11 @@ import createServices from './src/services';
 
 // Create and set up the express application instance
 const readEnv = config();
-
 const app: Application = express();
-
 //set up logger
 const logger = createLogger(app);
 
+//check integrity of env
 if(!readEnv || readEnv.error) {
   logger.error(':::: EXITING SERVER PROCESS: Error reading .env file ::::');
   process.exit(1);
@@ -34,9 +33,22 @@ const services = createServices();
 app.use('/v1/', services)
 
 
-app.get('/', function (req, res) {
-  res.send('Hello World!');
-});
+// create basic error middleware
+const errorHandlerMiddleware = (err: Error, req: APIRequest, res: APIResponse, next: APINext) => {
+  if(!err) err = new Error('Unknown error has happened, the incident has been reported, please try again later');
+  logger.error('Unknown error has heppened', {
+    data: {
+      body: req.body,
+      path: req.path,
+      params: req.params,
+      error: err,
+    }
+  })
+  res.status(500).send(err.message)
+}
+
+app.use(errorHandlerMiddleware);
+
 
 app.listen(port, function () {
   console.log('Example app listening on port 3000!');
