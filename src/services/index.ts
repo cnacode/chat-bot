@@ -2,7 +2,7 @@
 import { Router } from 'express';
 
 //import services
-import dummyService from './dummyService/routes';
+import dummyService from './dummyService';
 
 export default () => {
     const router = Router();
