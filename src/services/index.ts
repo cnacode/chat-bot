@@ -2,13 +2,15 @@
 import { Router } from 'express';
 
 //import services
-import dummyService from './dummyService';
+import createMetaService from './meta';
+import { asyncHandler } from '../util/asyncHandler';
 
 export default () => {
     const router = Router();
+    const metaService = createMetaService(asyncHandler)
 
     // activate/deactivate services
-    router.use('/dummy', dummyService);
+    router.use('/meta', metaService);
 
     return router;
 }
