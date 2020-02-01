@@ -6,3 +6,4 @@
 ## TODO:
 * improve documentation
 * add unit tests
+* add authentication and authorizaton helpers
