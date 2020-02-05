@@ -2,6 +2,7 @@
 import express from 'express';
 import { json } from 'body-parser';
 import { config } from 'dotenv';
+import cors from 'cors';
 
 
 //import modules and helpers
@@ -26,6 +27,7 @@ if(!readEnv || readEnv.error) {
 const port = 3070;
 const jsonBodyParser = json();
 app.use(jsonBodyParser);
+app.use(cors);
 
 
 //setup services
