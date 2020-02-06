@@ -4,13 +4,13 @@ import verify from './verification'
 
 
 export default (asyncHandler: any) => {
-    const dummyRouter = Router();
-    dummyRouter.route('/dummy').get(
+    const metaRouter = Router();
+    metaRouter.route('/').get(
         asyncHandler(verify.getDummyData),
-        asyncHandler(dummyController.getDummyData)
+        asyncHandler(dummyController.getMetadata)
     )
 
-    return dummyRouter;
+    return metaRouter;
 }
 
 

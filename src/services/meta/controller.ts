@@ -1,8 +1,8 @@
 import dummyService from './service';
 
 export default {
-    getVersion: async (req: APIRequest, res: APIResponse) => {
-        const data = await dummyService.getDummyData();
+    getMetadata: async (req: APIRequest, res: APIResponse) => {
+        const data = await dummyService.generateMetaData();
         res.json(data);
     }
 }

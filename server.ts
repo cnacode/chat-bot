@@ -23,16 +23,19 @@ if(!readEnv || readEnv.error) {
   process.exit(1);
 }
 
-
-const port = 3070;
 const jsonBodyParser = json();
 app.use(jsonBodyParser);
-app.use(cors);
+app.use(cors());
 
+
+app.use((req: APIRequest, res: APIResponse, next: APINext) => {
+  console.log('request to ', req.path);
+  next();
+})
 
 //setup services
 const services = createServices();
-app.use('/v1/', services)
+app.use('/v1', services)
 
 
 // create basic error middleware
@@ -51,7 +54,8 @@ const errorHandlerMiddleware = (err: Error, req: APIRequest, res: APIResponse, n
 
 app.use(errorHandlerMiddleware);
 
+const port = process.env['API_PORT'];
 
 app.listen(port, function () {
-  console.log('Example app listening on port 3000!');
+  console.log(`Example app listening on port ${port}`);
 });
