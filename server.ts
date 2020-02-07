@@ -49,7 +49,7 @@ const errorHandlerMiddleware = (err: Error, req: APIRequest, res: APIResponse, n
       error: err,
     }
   })
-  res.status(500).send(err.message)
+  res.status(500).send(err.message);
 }
 
 app.use(errorHandlerMiddleware);
