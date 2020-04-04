@@ -1,10 +1,9 @@
-import getVersion from '../../version';
+import * as pkj from '../../../package.json'
 
-export default {
-    generateMetaData: async () => {
-        return {
-            version: getVersion(),
-            apiName: process.env['API_NAME'],
-        }
+export const generateAppData = (deps: MethodDependencies) => {
+    const { name, version } = pkj
+    return {
+        name,
+        version,
     }
 }

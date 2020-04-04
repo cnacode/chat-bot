@@ -1,8 +1,14 @@
-import dummyService from './service';
+import { generateAppData } from './service'
 
-export default {
-    getMetadata: async (req: APIRequest, res: APIResponse) => {
-        const data = await dummyService.generateMetaData();
-        res.json(data);
+export default function (dependencies: ServiceDependencies) {
+    const { asyncHandler, logger } = dependencies
+
+    const get = async (req: APIRequest, res: APIResponse) => {
+        const data = await generateAppData({ logger })
+        res.json(data)
+    }
+
+    return {
+        get: asyncHandler(get),
     }
 }
