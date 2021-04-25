@@ -5,15 +5,10 @@
 3. run `yarn prod`
 
 
-### [optional]:
+### optional:
 There is a client tool included to test socket.io, open its `index.html` in chrome to start socket connection and run messages
 
-To view contents of a postgres database run 
 
-`docker run --rm -p 5050:5050 thajeztah/pgadmin4` 
-
-than visit `localhost:5050` in any browser
-pass your computer's ip when configuring (not localhost)
 ## Technologies
     * typescript
     * expressjs
@@ -25,6 +20,13 @@ pass your computer's ip when configuring (not localhost)
 1. This application is stateless and it relied on message content and `previousId` to make conversation
 2. Webhook is implemented on top of socket.io and is immediately listening to connections on application start
 
+- `Bot` has a `Flow`
+- `Flow` has many `FlowStep`s
+- `IncomingMessage` has a `Promise<BotResponse>` that a `FlowStep` will fulfill
+
+Bot logic is based upon flows, each flow is an array of `FlowStep`s. Every new message has a response `promise` that can be `fulfilled` by a `FlowStep`. Every `FlowStep` will observe new messages and decide if it is going to answer it.
+
+With higher loads, a more sophisticated approach is a MessageQueue system between micro-services consuming its content
 
 ## Flow of a message
 1. Socket observer receives a message containing
