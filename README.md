@@ -1,31 +1,40 @@
-## ts-boilerplate
-a simple and lean boilerplate based on express.js architecture for node.js services
+# chat-bot
+## How to run:
+1. run `yarn start-db` and wait until it is finished processing
+2. run `yarn build`
+3. run `yarn prod`
 
+
+### [optional]:
+There is a client tool included to test socket.io, open its `index.html` in chrome to start socket connection and run messages
+
+To view contents of a postgres database run 
+
+`docker run --rm -p 5050:5050 thajeztah/pgadmin4` 
+
+than visit `localhost:5050` in any browser
+pass your computer's ip when configuring (not localhost)
 ## Technologies
     * typescript
     * expressjs
-    * mongoose
-    * jest
-    * chai
-
-## Environment Variables
-
-|Variable| Description |
-| ------------- |:-------------:|
-| API_PORT | Port number for API to listen to |
-| API_NAME | Name of the API or service |
-| DB_URL | Mongodb connection string |
-
+    * typeorm
+    * rxjs
+    * socket.io
+    * mongodb
 ## Architecture
-...
+1. This application is stateless and it relied on message content and `previousId` to make conversation
+2. Webhook is implemented on top of socket.io and is immediately listening to connections on application start
 
-## TODO:
-### improve documentation
-### add unit tests
 
- - [x] add testing library
- - [x] add unit tests for meta service
- - [ ] add unit tests for errorHelper util
- - [ ] add unit tests for envHelper util
+## Flow of a message
+1. Socket observer receives a message containing
+   1. a body
+   2. a uuid from client
+   3. optional `previousId` in the flow
+2. the Bot will process the message and to do that it will delegate the processing to `FlowSteps`
+   1. Each `FlowStep` contains logic to check whether the incoming message is relevant to it. It can also interact with database.
+   2. At least one `FlowStep` will always respond to a message which guarantees a response and that each message is persisted.
+3. the bot will respond to message with a `BotResponse` object
 
-### add authentication and authorizaton helpers
+
+
