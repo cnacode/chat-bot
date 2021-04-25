@@ -6,7 +6,7 @@
 
 
 ### optional:
-There is a client tool included to test socket.io, open its `index.html` in chrome to start socket connection and run messages
+There is a client.zip tool included to test socket.io, extract in a folder and open its `index.html` in chrome to start socket connection and automatically run messages
 
 
 ## Technologies
