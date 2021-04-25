@@ -30,13 +30,13 @@ const socketio = ({ server, logger }: SocketDependencies) => {
 
     logger.info('✅socket.io created!')
 
-    connect.subscribe(({ client }: any) => {
-        console.log('connected: ', client.id)
-    })
+    // connect.subscribe(({ client }: any) => {
+    //     console.log('connected: ', client.id)
+    // })
 
-    disconnect.subscribe((client) => {
-        console.log('disconnected: ', client.id)
-    })
+    // disconnect.subscribe((client) => {
+    //     console.log('disconnected: ', client.id)
+    // })
 
     return {
         connect,
