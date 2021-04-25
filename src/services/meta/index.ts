@@ -1,15 +1,18 @@
 import { Router } from 'express'
+import { generateAppData } from './service'
+import { verify } from './middlewares'
+
 const routes = Router()
-import createService from './controller'
-import createMiddlewares from './middlewares'
 
 export default function (app: Router, dependencies: ServiceDependencies) {
-    const { logger } = dependencies
+    const { logger, asyncHandler } = dependencies
+
+    const get = async (req: APIRequest, res: APIResponse) => {
+        const data = await generateAppData({ logger })
+        res.json(data)
+    }
+
     app.use('/meta', routes)
-
-    const { get } = createService(dependencies)
-    const { verify } = createMiddlewares(dependencies)
-
-    routes.get('/', [verify.getAppData, get])
+    routes.get('/', [verify.getAppData, asyncHandler(get)])
     logger.info('✅ meta service loaded!')
 }
